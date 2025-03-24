@@ -7,7 +7,7 @@ update @ 2025/03/24
 
 2. under isp_user.c , need to modify as below 
 
-keypoint in isp_user.c
+__keypoint in isp_user.c__
 
 ```c
     else if (lcmd == CMD_GET_DEVICEID)
@@ -48,7 +48,7 @@ keypoint in isp_user.c
 
 3. add SPIM init in main.c , use UART0 to print debug message , check define : ENABLE_UART0 , UART0_PRINTF
 
-keypoint in main.c
+__keypoint in main.c__
 
 ```c
     g_apromSize = 0x80000 - 0x3000; // reserve data flash 4K , APROM_Bootloader.bin : 8K
@@ -56,9 +56,11 @@ keypoint in main.c
     g_dataFlashSize = 0x1000;
 ```
 
-4. under hid_20_iap.sct , to spilt boot loader in LDROM and APROM 
+4. add SPIM driver will more than 4K size  , hence need to add last 3 pages in APROM for boot loader ( include data flash : 4K)
 
-add SPIM driver will more than 4K size , hence , need to add last 3 pages in APROM for boot loader ( include data flash : 4K)
+use hid_20_iap.sct to spilt boot loader in LDROM and APROM
+
+__keypoint in hid_20_iap.sct__
 
 ```c
 	LOAD_ROM_1  0x100000 0xFFF
@@ -129,4 +131,9 @@ APROM : 0x7D000 ( 2 PAGES ) , programming with APROM_Bootloader.bin
 DATA FLASH : 0x7F000 ( 1 PAGE )
 
 ![image](https://github.com/released/M480BSP_ISP_HID_20_SPIFLASH_APROM/blob/main/memory_map_512K.jpg)
+
+8. below is log message when entry boot loader and app code
+
+![image](https://github.com/released/M480BSP_ISP_HID_20_SPIFLASH_APROM/blob/main/log.jpg)
+
 
