@@ -1,0 +1,29 @@
+LOAD_ROM_1  0x100000 0xFFF
+{
+	LDROM_Bootloader.bin  0x100000 0xFFF
+	{
+		startup_M480.o (RESET, +FIRST)
+        .ANY (+RO)		
+		;fmc_user.o (+RO)
+		;hid_transfer.o (+RO)
+		;hsusbd_user.o (+RO)
+		isp_user.o (+RO)
+		spim.o (+RO)
+		;system_m480.o (+RO)
+		;targetdev.o (+RO)
+		main.o (+RO)
+	}
+	
+	SRAM  0x20000000 0x20000
+	{
+		* (+RW, +ZI)
+	}
+}
+
+LOAD_ROM_2  0x7D000 0x2000
+{
+	APROM_Bootloader.bin  0x7D000 0x2000
+	{
+        .ANY (+RO)
+	}
+}
